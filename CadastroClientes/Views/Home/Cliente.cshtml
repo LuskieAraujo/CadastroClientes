@@ -1,0 +1,87 @@
+﻿@model List<ClienteModel>
+@{
+	ViewData["Title"] = "Clientes";
+}
+
+<div class="text-center">
+	<h1>Cadastrar cliente</h1>
+	<div class="row">
+		<div class="form-group col-4">
+			<div class="input-group">
+				<label class="col-form-label col-3 text-right">Nome</label>
+				<input class="col-9 form-control" type="text" id="txtNomeCliente" />
+			</div>
+		</div>
+		<div class="form-group col-5">
+			<div class="input-group">
+				<label class="col-form-label col-3 text-right">Documento</label>
+				<select class="col-3 custom-select" id="lstDocumento">
+					<option value="1" selected>CPF</option>
+					<option value="2">CNPJ</option>
+				</select>
+				<input class="col-6 form-control" type="text" aria-label="Text input with dropdown button">
+			</div>
+		</div>
+		<div class="form-group col-3">
+			<div class="input-group">
+				<label class="col-form-label col-4 text-right">Telefone</label>
+				<input class="col-8 form-control" type="text" id="txtTelefone" />
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="form-group offset-11 col-1">
+			<button type="button" class="btn btn-dark" id="btnSalvar">Salvar</button>
+		</div>
+	</div>
+	<table class="table table-hover table-sm">
+		<thead class="thead-dark">
+			<tr>
+				<th scope="col" class="col-1">#</th>
+				<th scope="col" class="col-4">Nome</th>
+				<th scope="col" class="col-2">Documento</th>
+				<th scope="col" class="col-2">Telefone</th>
+				<th scope="col" class="col-2">Ações</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var cli in Model)
+			{
+				<tr>
+					<th scope="row">@cli.Id</th>
+					<td>@cli.Nome</td>
+					<td>@cli.Documento</td>
+					<td>@cli.Telefone</td>
+					<td>
+						<div class="btn-group" role="group">
+							<button type="button" class="btn btn-sm btn-secondary" asp-controller="Home" asp-action="EditarCliente">Editar</button>
+							<button type="button" class="btn btn-sm btn-secondary" asp-controller="Home" asp-action="ExcluirCliente">Apagar</button>
+						</div>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
+
+@* Enunciado:
+Uma empresa contratou seus serviços e necessita que um sistema web seja desenvolvido para
+que ela consiga cadastrar e visualizar todos os seus clientes. *@
+
+@* Os dados necessários para o cadastro do cliente são os seguintes:
+Nome; Tipo (PF / PJ); Documento (CNPJ / CPF); Data do Cadastro; Telefone. *@
+
+@* Regras:
+Todos os campos são obrigatórios.
+O campo documento deve ter máscara e validação de acordo com o Tipo, ou seja, se no
+momento do cadastro o tipo selecionado for PF, o documento deve ter a máscara e validação
+de CPF, se o tipo selecionado for PJ o documento deve ter a máscara e validação de CNPJ.
+A validação deve ser feita tanto no frontend quanto no backend.
+Na listagem de clientes deve ser possível filtrar os clientes por Nome e Documento.
+Deverá ser possível editar e remover os clientes cadastrados, no caso da remoção, deverá ser
+feito um soft delete. *@
+
+@* Observações:
+O site deverá ser desenvolvido com as seguintes tecnologias:
+jQuery
+Entity Framework com Code First  *@
