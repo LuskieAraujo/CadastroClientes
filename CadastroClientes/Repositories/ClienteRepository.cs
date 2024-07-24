@@ -63,5 +63,16 @@ namespace CadastroClientes.Repositories
 				return new List<ClienteModel>();
 			}
 		}
+		public List<ClienteModel> Filtrar(string nome, string documento)
+		{
+			try
+			{
+				return _context.Clientes.Where(x => x.Nome.Contains(nome) || x.Documento.Contains(documento)).ToList();
+			}
+			catch
+			{
+				return new List<ClienteModel>();
+			}
+		}
 	}
 }

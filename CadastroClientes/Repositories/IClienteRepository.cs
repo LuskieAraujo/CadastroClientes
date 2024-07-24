@@ -9,5 +9,6 @@ namespace CadastroClientes.Repositories
 		bool Alterar(ClienteModel cliente);
 		ClienteModel Obter(int id);
 		List<ClienteModel> ListarTodos();
+		List<ClienteModel> Filtrar(string nome, string documento);
 	}
 }
