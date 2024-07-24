@@ -1,0 +1,60 @@
+﻿@model List<ClienteModel>
+@{
+	ViewData["Title"] = "Clientes";
+}
+
+<div class="text-center">
+	<div class="row">
+		<div class="form-group offset-10 col-2">
+			<a type="button" class="btn btn-light" asp-route-id="0" asp-controller="Cliente" asp-action="Cliente">Novo</a>
+		</div>
+	</div>
+
+	<table class="table table-hover table-sm">
+		<thead class="thead-dark">
+			<tr>
+				<th scope="col" class="col-1">#</th>
+				<th scope="col" class="col-4">Nome</th>
+				<th scope="col" class="col-2">Documento</th>
+				<th scope="col" class="col-2">Telefone</th>
+				<th scope="col" class="col-2">Ações</th>
+			</tr>
+		</thead>
+		<tbody>
+			@if(Model != null && Model.Any())
+			{
+				foreach (var cli in Model)
+				{
+					<tr>
+						<th scope="row">@cli.Id</th>
+						<td>@cli.Nome</td>
+						<td>@cli.Documento</td>
+						<td>@cli.Telefone</td>
+						<td>
+							<div class="btn-group" role="group">
+								<a type="button" class="btn btn-sm btn-secondary" asp-route-id="@cli.Id" asp-controller="Cliente" asp-action="Cliente">Editar</a>
+								<button type="button" class="btn btn-sm btn-secondary" asp-route-id="@cli.Id" asp-controller="Cliente" asp-action="Excluir">Apagar</button>
+							</div>
+						</td>
+					</tr>
+				}
+			}
+		</tbody>
+	</table>
+</div>
+
+@* Enunciado:
+Uma empresa contratou seus serviços e necessita que um sistema web seja desenvolvido para
+que ela consiga cadastrar e visualizar todos os seus clientes. *@
+
+@* Os dados necessários para o cadastro do cliente são os seguintes:
+Nome; Tipo (PF / PJ); Documento (CNPJ / CPF); Data do Cadastro; Telefone. *@
+
+@* Regras:
+Todos os campos são obrigatórios.
+O campo documento deve ter máscara e validação de acordo com o Tipo, ou seja, se no momento do cadastro o tipo selecionado for PF, o documento deve ter a máscara e validação de CPF, se o tipo selecionado for PJ o documento deve ter a máscara e validação de CNPJ.
+A validação deve ser feita tanto no frontend quanto no backend. Na listagem de clientes deve ser possível filtrar os clientes por Nome e Documento. Deverá ser possível editar e remover os clientes cadastrados, no caso da remoção, deverá ser feito um soft delete. *@
+
+@* Observações:
+O site deverá ser desenvolvido com as seguintes tecnologias:
+jQuery *@
