@@ -13,9 +13,11 @@ namespace CadastroClientes.Controllers
 			_repository = repository;
 		}
 
-		public IActionResult Clientes()
+		public IActionResult Clientes(string nome = "", string documento = "")
 		{
-			return View(_repository.ListarTodos());
+			return nome != "" || documento != ""
+				? View(_repository.ListarTodos())
+				: View(_repository.Filtrar(nome, documento));
 		}
 		public IActionResult Cliente(int id)
 		{
@@ -40,10 +42,13 @@ namespace CadastroClientes.Controllers
 
 			return RedirectToAction("Clientes");
 		}
-		[HttpDelete]
-		public IActionResult Excluir()
+		[HttpPost]
+		public IActionResult Excluir(int id)
 		{
-			return View();
+			ClienteModel cliente = _repository.Obter(id);
+			cliente.Ativo = false;
+
+			return RedirectToAction("Clientes");
 		}
 	}
 }
