@@ -22,9 +22,9 @@
 				<input class="col-9 form-control" type="text" id="txtDocumentoCliente" />
 			</div>
 		</div>
-		<div class="form-group offset-10 col-2">
-			<button type="button" class="btn btn-light" asp-controller="Cliente" asp-action="Filtrar">Limpar Filtros</button>
-			<button type="button" class="btn btn-dark" asp-controller="Cliente" asp-action="Filtrar">Filtrar</button>
+		<div class="form-group offset-1 col-3">
+			<button id="btnFiltrar" type="button" class="btn btn-dark" asp-controller="Cliente" asp-action="Clientes">Filtrar</button>
+			<a id="btnLimparFiltros" type="button" class="btn btn-light" asp-controller="Cliente" asp-action="Clientes">Limpar Filtros</a>
 		</div>
 	</div>
 
@@ -82,41 +82,46 @@
 </div>
 @section Scripts {
 	<script>
-		var id;
+		$(document).ready(function () {
+			var campoNome = $('#txtNomeCliente');
+			var campoDocumento = $('#txtDocumentoCliente');
 
-		$('#modalApagar').on('show.bs.modal', function (event) {
-			var button = $(event.relatedTarget);
-			var modal = $(this);
-			
-			id = button.data('id');
-			document.getElementById('lblNome').innerHTML = button.data('nome');
-			modal.find('#btnApagar').attr('asp-route-id', id);
-		});
+			$('#modalApagar').on('show.bs.modal', function (event) {
+				var id;
+				var button = $(event.relatedTarget);
+				var modal = $(this);
 
-		$('#btnApagar').click(function () {
-			$.ajax({
-				type: "POST",
-				url: "/Cliente/Excluir",
-				data: id,
-				success: function (data) { alert("Deletado"); },
-				error: function (data) { alert(response.responseText); }
+				id = button.data('id');
+				document.getElementById('lblNome').innerHTML = button.data('nome');
+				modal.find('#btnApagar').attr('asp-route-id', id);
+			});
+
+			$('#btnApagar').click(function () {
+				$.ajax({
+					type: "POST",
+					url: "/Cliente/Excluir",
+					data: { id: $('#btnApagar').attr('asp-route-id') },
+					success: {
+
+					}
+				});
+			});
+
+			$('#btnFiltrar').click(function () {
+				$.ajax({
+					type: 'GET',
+					url: "/Cliente/Clientes",
+					contentType: "application/json",
+					data: { nome: campoNome.val(), documento: campoDocumento.val() },
+					success: {
+
+					}
+				});
 			});
 		});
 	</script>
 }
 
-@* Enunciado:
-Uma empresa contratou seus serviços e necessita que um sistema web seja desenvolvido para
-que ela consiga cadastrar e visualizar todos os seus clientes. *@
-
-@* Os dados necessários para o cadastro do cliente são os seguintes:
-Nome; Tipo (PF / PJ); Documento (CNPJ / CPF); Data do Cadastro; Telefone. *@
-
 @* Regras:
-Todos os campos são obrigatórios.
 O campo documento deve ter máscara e validação de acordo com o Tipo, ou seja, se no momento do cadastro o tipo selecionado for PF, o documento deve ter a máscara e validação de CPF, se o tipo selecionado for PJ o documento deve ter a máscara e validação de CNPJ.
 A validação deve ser feita tanto no frontend quanto no backend. Na listagem de clientes deve ser possível filtrar os clientes por Nome e Documento. Deverá ser possível editar e remover os clientes cadastrados, no caso da remoção, deverá ser feito um soft delete. *@
-
-@* Observações:
-O site deverá ser desenvolvido com as seguintes tecnologias:
-jQuery *@

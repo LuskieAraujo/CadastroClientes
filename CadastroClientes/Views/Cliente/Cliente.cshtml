@@ -5,12 +5,13 @@
 <form asp-controller="Cliente" asp-action="Salvar" method="post">
 	<input type="hidden" id="idCliente" asp-for="Id" />
 	<input type="hidden" id="dtCadastro" asp-for="DataCadastro" />
+	<input type="hidden" id="ativo" asp-for="Ativo" />
 	<h1>Cadastrar cliente</h1>
 	<div class="row">
 		<div class="form-group col-4">
 			<div class="input-group">
 				<label class="col-form-label col-3 text-right">Nome</label>
-				<input class="col-9 form-control" type="text" id="txtNomeCliente" asp-for="Nome" />
+				<input class="col-9 form-control" type="text" id="txtNomeCliente" asp-for="Nome" required />
 			</div>
 		</div>
 		<div class="form-group col-5">
@@ -20,13 +21,13 @@
 					<option value="1" selected>CPF</option>
 					<option value="2">CNPJ</option>
 				</select>
-				<input class="col-6 form-control" type="text" asp-for="Documento" id="txtDocumento" />
+				<input class="col-6 form-control" type="text" asp-for="Documento" id="txtDocumento" required />
 			</div>
 		</div>
 		<div class="form-group col-3">
 			<div class="input-group">
 				<label class="col-form-label col-4 text-right">Telefone</label>
-				<input class="col-8 form-control" type="text" id="txtTelefone" asp-for="Telefone" />
+				<input class="col-8 form-control" type="text" id="txtTelefone" asp-for="Telefone" required />
 			</div>
 		</div>
 	</div>
@@ -43,8 +44,9 @@
 
 	$(document).ready(function () {
 		$('#lstDocumento').change(function () {
-
-			$('#txtDocumento').val('').inputmask();
+			var mask = $('#lstDocumento').val() == 1 ? cpfmask : cnpjmask;
+			$('#txtDocumento').val('');
+			$('#txtDocumento').inputmask(mask);
 		});
 	});
 </script>
