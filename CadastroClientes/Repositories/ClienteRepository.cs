@@ -41,6 +41,20 @@ namespace CadastroClientes.Repositories
 				return false;
 			}
 		}
+		public void Excluir(int id)
+		{
+			try
+			{
+				var cliente = _context.Clientes.Where(x => x.Id == id).First();
+				cliente.Ativo = false;
+				_context.Clientes.Update(cliente);
+				_context.SaveChanges();
+			}
+			catch
+			{
+				throw;
+			}
+		}
 		public ClienteModel Obter(int id)
 		{
 			try
