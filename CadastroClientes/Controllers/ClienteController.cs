@@ -47,9 +47,7 @@ namespace CadastroClientes.Controllers
 		[HttpPost]
 		public IActionResult Excluir(int id)
 		{
-			ClienteModel cliente = _repository.Obter(id);
-			cliente.Ativo = false;
-
+			_repository.Excluir(id);
 			return RedirectToAction("Clientes");
 		}
 	}
