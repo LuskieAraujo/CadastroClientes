@@ -67,7 +67,10 @@ namespace CadastroClientes.Repositories
 		{
 			try
 			{
-				return _context.Clientes.Where(x => x.Nome.Contains(nome) || x.Documento.Contains(documento)).ToList();
+				return _context.Clientes
+					.Where(x => x.Ativo == true)
+					.Where(c => c.Nome.Contains(nome) || nome == string.Empty)
+					.Where(l => l.Documento.Contains(documento) || documento == string.Empty).ToList();
 			}
 			catch
 			{

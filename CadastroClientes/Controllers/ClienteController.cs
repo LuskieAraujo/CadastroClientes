@@ -15,9 +15,11 @@ namespace CadastroClientes.Controllers
 
 		public IActionResult Clientes(string nome = "", string documento = "")
 		{
-			return nome != "" || documento != ""
-				? View(_repository.ListarTodos())
-				: View(_repository.Filtrar(nome, documento));
+			var retorno = nome == "" && documento == ""
+				? _repository.ListarTodos()
+				: _repository.Filtrar(nome ?? string.Empty, documento ?? string.Empty);
+
+			return View(retorno);
 		}
 		public IActionResult Cliente(int id)
 		{
